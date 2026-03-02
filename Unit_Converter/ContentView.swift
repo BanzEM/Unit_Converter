@@ -8,14 +8,19 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State private var unit: Double = 0.0
+    @State private var convertedUnit: Double = 273.15
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationStack{
+            Form{
+                
+                
+                
+            }.navigationTitle("Unit Converter")
+                .navigationBarTitleDisplayMode(.inline)
         }
-        .padding()
     }
 }
 
