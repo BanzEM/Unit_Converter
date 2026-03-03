@@ -10,7 +10,15 @@ import SwiftUI
 struct ContentView: View {
     
     @State private var celciusUnit =  0.0
-    @State private var convertedUnit =  273.15
+    let  kelvinUnit =  273.15
+    
+     var temp: Double {
+         
+         let tempInKelvin = celciusUnit + kelvinUnit
+        
+        return tempInKelvin
+    }
+    
     
     var body: some View {
         NavigationStack{
@@ -20,7 +28,7 @@ struct ContentView: View {
                 }
                 
                 Section("Temperature in Kelvin"){
-                    Text("\(convertedUnit, specifier: "%.2f")")
+                    Text("\(temp, specifier: "%.2f")")
                 }
                 
             }.navigationTitle("Unit Converter")
