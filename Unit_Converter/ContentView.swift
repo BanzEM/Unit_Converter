@@ -54,7 +54,7 @@ struct ContentView: View {
     var unit: String {
         switch (tempUnitTo) {
         case ("C"):
-            return "Celcius"
+            return "Celsius"
             
         case ("K"):
             return "Kelvin"
@@ -70,7 +70,7 @@ struct ContentView: View {
     var unitFrom: String {
         switch (tempUnit) {
         case ("C"):
-            return "Celcius"
+            return "Celsius"
             
         case ("K"):
             return "Kelvin"
