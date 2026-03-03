@@ -11,15 +11,38 @@ struct ContentView: View {
     
     @State private var celciusUnit =  25.5
     @State private var tempUnit = "C"
+    @State private var tempUnitTo = "K"
     let  kelvinUnit =  273.15
+    var tempInKelvin: Double = 0.00
     
     
     let temperatures = ["C", "K", "F"]
+    var convertedTo = ["C", "K", "F"]
     
      var temp: Double {
-         let tempInKelvin = celciusUnit + kelvinUnit
+         switch (tempUnit, tempUnitTo) {
+         case ("C", "K"):
+             return celciusUnit + kelvinUnit
         
-        return tempInKelvin
+         case ("K", "C"):
+             return (celciusUnit * 9/5) + 32 + kelvinUnit
+             
+         case ("C", "F"):
+            return  celciusUnit
+             
+         case ("F", "C") :
+             return  celciusUnit
+             
+         case ("F", "K") :
+             return  celciusUnit
+             
+         case ("K", "F") :
+             return  celciusUnit
+             
+         default:
+            return  celciusUnit
+         }
+         
     }
     
     
@@ -40,11 +63,18 @@ struct ContentView: View {
                 }
                 
                 Section("Temperature in Kelvin"){
-                    Text("\(temp, specifier: "%.2f")")
-                }
-                
-            }.navigationTitle("Unit Converter")
-                .navigationBarTitleDisplayMode(.inline)
+                    HStack{
+                        Text("\(temp, specifier: "%.2f")")
+                        Picker("", selection: $tempUnitTo){
+                            ForEach(temperatures, id: \.self){
+                                Text($0)
+                            }
+                        }
+                    }
+                    
+                }.navigationTitle("Unit Converter")
+                    .navigationBarTitleDisplayMode(.inline)
+            }
         }
     }
 }
