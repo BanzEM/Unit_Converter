@@ -9,10 +9,16 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State private var celciusUnit =  25.5
+    @State private var celciusUnit =  0.0
+    let  kelvinUnit =  273.15
+    let  fahrenheitUnit = 32.0
+    
+    
     @State private var tempUnit = "C"
     @State private var tempUnitTo = "K"
-    let  kelvinUnit =  273.15
+    @State private var tempUnitToIndex = "F"
+    
+    
     var tempInKelvin: Double = 0.00
     
     
@@ -25,19 +31,19 @@ struct ContentView: View {
              return celciusUnit + kelvinUnit
         
          case ("K", "C"):
-             return (celciusUnit * 9/5) + 32 + kelvinUnit
+             return celciusUnit - kelvinUnit
              
          case ("C", "F"):
-            return  celciusUnit
+            return  (celciusUnit * 9/5) + fahrenheitUnit
              
          case ("F", "C") :
-             return  celciusUnit
+             return  (celciusUnit - fahrenheitUnit) * 5/9
              
          case ("F", "K") :
-             return  celciusUnit
+             return  (celciusUnit  - fahrenheitUnit) * 5/9 + kelvinUnit
              
          case ("K", "F") :
-             return  celciusUnit
+             return  (celciusUnit - kelvinUnit) * 9/5 + fahrenheitUnit
              
          default:
             return  celciusUnit
@@ -45,13 +51,46 @@ struct ContentView: View {
          
     }
     
+    var unit: String {
+        switch (tempUnitTo) {
+        case ("C"):
+            return "Celcius"
+            
+        case ("K"):
+            return "Kelvin"
+            
+        case ("F"):
+            return "Fahrenhiet"
+            
+        default:
+            return "unknown"
+        }
+    }
+    
+    var unitFrom: String {
+        switch (tempUnit) {
+        case ("C"):
+            return "Celcius"
+            
+        case ("K"):
+            return "Kelvin"
+            
+        case ("F"):
+            return "Fahrenhiet"
+            
+        default:
+            return "unknown"
+        }
+    }
+    
+    
     
     var body: some View {
         NavigationStack{
             Form{
-                Section("Temperature in celcius"){
+                Section("Temperature in \(unitFrom)"){
                     HStack{
-                        TextField("Enter value in Celcius", value: $celciusUnit, format: .number )
+                        TextField("Enter value in \(unitFrom)", value: $celciusUnit, format: .number )
                             .keyboardType(.decimalPad)
                         
                         Picker("", selection: $tempUnit){
@@ -62,7 +101,7 @@ struct ContentView: View {
                     }
                 }
                 
-                Section("Temperature in Kelvin"){
+                Section("Temperature in \(unit)"){
                     HStack{
                         Text("\(temp, specifier: "%.2f")")
                         Picker("", selection: $tempUnitTo){
