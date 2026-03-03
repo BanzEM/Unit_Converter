@@ -9,11 +9,14 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State private var celciusUnit =  0.0
+    @State private var celciusUnit =  25.5
+    @State private var tempUnit = "C"
     let  kelvinUnit =  273.15
     
+    
+    let temperatures = ["C", "K", "F"]
+    
      var temp: Double {
-         
          let tempInKelvin = celciusUnit + kelvinUnit
         
         return tempInKelvin
@@ -24,7 +27,16 @@ struct ContentView: View {
         NavigationStack{
             Form{
                 Section("Temperature in celcius"){
-                    TextField("Enter value in Celcius", value: $celciusUnit, format: .number )
+                    HStack{
+                        TextField("Enter value in Celcius", value: $celciusUnit, format: .number )
+                            .keyboardType(.decimalPad)
+                        
+                        Picker("", selection: $tempUnit){
+                            ForEach(temperatures, id: \.self){
+                                Text($0)
+                            }
+                        }
+                    }
                 }
                 
                 Section("Temperature in Kelvin"){
